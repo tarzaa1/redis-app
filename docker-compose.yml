@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+ redis:
+  image: redis
+  ports:
+   - "6379:6379"
+  networks:
+   - app
+
+ readstream:
+  image: tareqz/python-redis-mystream
+  depends_on:
+   - redis
+  environment:
+   - REDISHOST=redis
+   - REDISPORT=6379
+   - REDISSTREAM=mystream
+  networks:
+   - app
+
+networks:
+  app:
+    driver: overlay
+    attachable: true 
