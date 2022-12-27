@@ -1,9 +1,13 @@
 from walrus import Database
 import os
+import logging
 
-redis_host = os.environ.get('REDISHOST', 'localhost')
-redis_port = os.environ.get('REDISPORT', 6379)
-redis_stream = os.environ.get('REDISSTREAM', 'mystream')
+log_format = '%(levelname)s:%(message)s'
+logging.basicConfig(filename='redis-app.log', format=log_format, filemode='w', level=logging.DEBUG)
+
+redis_host = os.environ.get('REDISHOST')
+redis_port = os.environ.get('REDISPORT')
+redis_stream = os.environ.get('REDISSTREAM')
 last_id = None
 
 
@@ -14,4 +18,4 @@ while True:
     message = stream.read(count=1, last_id = last_id)
     if message:
         last_id = message[-1][0]
-        print(message)
+        logging.debug(f'Received message: {message}')
