@@ -8,14 +8,18 @@ logging.basicConfig(filename='redis-app.log', format=log_format, filemode='w', l
 redis_host = os.environ.get('REDISHOST')
 redis_port = os.environ.get('REDISPORT')
 redis_stream = os.environ.get('REDISSTREAM')
-last_id = None
 
 
-db = Database(host=redis_host, port=redis_port)
-stream = db.Stream(redis_stream)
+def main():
+    db = Database(host=redis_host, port=redis_port)
+    stream = db.Stream(redis_stream)
+    event_id = None
 
-while True:
-    message = stream.read(count=1, last_id = last_id)
-    if message:
-        last_id = message[-1][0]
-        logging.debug(f'Received message: {message}')
+    while True:
+        message = stream.read(count=1, last_id = event_id)
+        if message:
+            event_id = message[-1][0]
+            logging.debug(f'Received message: {message}')
+
+if __name__=='__main__':
+    main()
