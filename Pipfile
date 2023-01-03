@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 walrus = "*"
+redis-app = {editable = true, path = "."}
 
 [dev-packages]
 ipython = "*"
