@@ -13,14 +13,13 @@ redis_stream = os.environ.get('REDISSTREAM')
 
 def main():
     stream_factory = RedisStreamFactory(host=redis_host, port=redis_port)
-    stream=stream_factory.create(redis_stream)
-    event_id = None
+    stream=stream_factory.create(redis_stream, stype='streamOnly')
 
     while True:
-        message = stream.read_events(last_id=event_id)
+        message = stream.read_events()
         if message:
-            event_id = message[-1][0]
-            logging.debug(f'Received message: {message}')
+            print(message)
+
 
 if __name__=='__main__':
     main()
