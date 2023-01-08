@@ -16,8 +16,8 @@ def main():
     stream=stream_factory.create(redis_stream, stype='streamOnly')
 
     while True:
-        message = stream.read_events()
-        if message:
+        messages = stream.read_events()
+        for message in messages:
             print(message)
 
 
