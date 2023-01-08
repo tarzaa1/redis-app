@@ -10,7 +10,7 @@ redis_stream = os.environ.get('REDISSTREAM')
 def main():
     stream_factory = RedisStreamFactory(host=redis_host, port=redis_port)
     stream = stream_factory.create(redis_stream)
-    events = [{'sen':9}, {'sen':10}, {'sen':11}, {'sen':12}]
+    events = [{'sen':1}, {'sen':2}, {'sen':3}, {'sen':4}]
 
     stream.write_events(*events)
 
