@@ -44,6 +44,12 @@ class RedisStreamAndConsume(BasicStream):
     def _get_stream(self, key):
         return self.redis_db.Stream(key)
 
+    def ack(self, event_id, stream_key=None):
+        if stream_key is None:
+            stream_key = self.key
+        cg_stream = getattr(self.input_consumer_group, stream_key)
+        cg_stream.ack(event_id)
+
 class RedisStreamOnly(BasicStream):
 
     def __init__(self, redis_db, key, max_stream_length=None, block=0):
