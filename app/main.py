@@ -13,7 +13,7 @@ redis_stream = os.environ.get('REDISSTREAM')
 
 def main():
     stream_factory = RedisStreamFactory(host=redis_host, port=redis_port)
-    stream=stream_factory.create(redis_stream, stype='streamOnly')
+    stream=stream_factory.create(redis_stream)
 
     while True:
         messages = stream.read_events()
